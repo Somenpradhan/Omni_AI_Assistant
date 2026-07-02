@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompsy - AI Prompt Enhancer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="clay-container" id="appContainer">
+        <!-- Main Interface Panel -->
+        <div class="panel active" id="mainPanel">
+            <!-- Window Control Header -->
+            <header class="app-header">
+                <div class="app-logo">
+                    <span class="logo-circle"></span>
+                    <h1>Prompsy</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" id="settingsBtn" title="Settings">⚙️</button>
+                    <button class="icon-btn close-btn" id="closeBtn" title="Close">✕</button>
+                </div>
+            </header>
+
+            <main class="app-content">
+                <!-- Inputs Section -->
+                <div class="input-group">
+                    <label for="originalPrompt">Captured Selection</label>
+                    <div class="textarea-container clay-inset">
+                        <textarea id="originalPrompt" placeholder="Highlight text anywhere and press shortcut, or type your raw prompt here..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Control Bar -->
+                <div class="control-row">
+                    <div class="select-wrapper clay-select">
+                        <select id="optimMode">
+                            <option value="enhance">✨ Standard Optimization</option>
+                            <option value="structure">📋 Structure & Hierarchy</option>
+                            <option value="clarify">🎯 Clarify & Remove Ambiguity</option>
+                            <option value="shorten">⚡ Shorten & Token Efficient</option>
+                        </select>
+                    </div>
+                    <button class="clay-button primary" id="optimizeBtn">Enhance Prompt</button>
+                </div>
+
+                <!-- Output Section -->
+                <div class="output-group">
+                    <label for="optimizedPrompt">Optimized Prompt</label>
+                    <div class="textarea-container clay-inset output-inset">
+                        <div class="clay-loader" id="loader">
+                            <div class="spinner"></div>
+                            <span>Optimizing prompt using AI...</span>
+                        </div>
+                        <textarea id="optimizedPrompt" placeholder="Your enhanced prompt will stream here..." readonly></textarea>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Bottom Actions -->
+            <footer class="app-footer">
+                <button class="clay-button" id="copyBtn">Copy</button>
+                <button class="clay-button success" id="pasteBackBtn">Copy & Paste</button>
+            </footer>
+        </div>
+
+        <!-- Settings Interface Panel -->
+        <div class="panel" id="settingsPanel">
+            <header class="app-header">
+                <div class="app-logo">
+                    <h1>Settings</h1>
+                </div>
+                <button class="icon-btn close-btn" id="settingsCloseBtn" title="Back">✕</button>
+            </header>
+
+            <main class="app-content settings-content">
+                <div class="settings-grid">
+                    <!-- Provider Selection -->
+                    <div class="setting-item">
+                        <label for="providerSelect">AI Provider</label>
+                        <div class="select-wrapper clay-select">
+                            <select id="providerSelect">
+                                <option value="gemini">Google Gemini (BYOK)</option>
+                                <option value="openai">OpenAI (BYOK)</option>
+                                <option value="aether">Aether Agent (Local FastAPI)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- API Key (Hidden if local agent) -->
+                    <div class="setting-item" id="apiKeyWrapper">
+                        <label for="apiKeyInput">API Key</label>
+                        <div class="input-container clay-inset-small">
+                            <input type="password" id="apiKeyInput" placeholder="Enter your provider API Key">
+                            <button class="show-hide-btn" id="toggleApiKey">👁️</button>
+                        </div>
+                    </div>
+
+                    <!-- Model Selection -->
+                    <div class="setting-item">
+                        <label for="modelSelect">AI Model</label>
+                        <div class="select-wrapper clay-select">
+                            <select id="modelSelect">
+                                <!-- Loaded dynamically via javascript -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Global Shortcut -->
+                    <div class="setting-item">
+                        <label for="shortcutInput">Global Keyboard Shortcut</label>
+                        <div class="input-container clay-inset-small">
+                            <input type="text" id="shortcutInput" placeholder="e.g. Ctrl+Shift+E">
+                        </div>
+                        <span class="caption">Double-click / focus anywhere and highlight text, then press this shortcut.</span>
+                    </div>
+
+                    <!-- Custom System Prompt -->
+                    <div class="setting-item full-width">
+                        <label for="systemPromptInput">System Prompts Instruction</label>
+                        <div class="textarea-container clay-inset-small">
+                            <textarea id="systemPromptInput" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Auto Paste Checkbox -->
+                    <div class="setting-item checkbox-item">
+                        <input type="checkbox" id="autoPasteCheckbox" class="clay-checkbox">
+                        <label for="autoPasteCheckbox">Auto Paste Back (paste back to source application automatically)</label>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="app-footer">
+                <button class="clay-button" id="settingsCancelBtn">Cancel</button>
+                <button class="clay-button success" id="settingsSaveBtn">Save Changes</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Script loading -->
+    <script src="renderer.js"></script>
+</body>
+</html>

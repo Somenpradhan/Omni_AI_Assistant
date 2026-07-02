@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    image: enterprise-ai-assistant:latest
+    container_name: enterprise-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=$OPENAI_API_KEY
+      - GROQ_API_KEY=$GROQ_API_KEY
+      - TAVILY_API_KEY=$TAVILY_API_KEY
+      - DATABASE_URL=sqlite:///enterprise.db
+    volumes:
+      - ./uploaded_documents:/workspace/uploaded_documents
+      - ./vector_db:/workspace/vector_db
+      - ./logs:/workspace/logs
+      - ./enterprise.db:/workspace/enterprise.db
+      - ./memory.db:/workspace/memory.db
+    restart: always
+
+  frontend:
+    build: .
+    image: enterprise-ai-assistant:latest
+    container_name: enterprise-frontend
+    ports:
+      - "8501:8501"
+    environment:
+      - OPENAI_API_KEY=$OPENAI_API_KEY
+      - GROQ_API_KEY=$GROQ_API_KEY
+      - TAVILY_API_KEY=$TAVILY_API_KEY
+    command: ["streamlit", "run", "app/frontend/streamlit_app.py", "--server.port", "8501", "--server.address", "0.0.0.0"]
+    volumes:
+      - ./app/frontend:/workspace/app/frontend
+    depends_on:
+      - backend
+    restart: always

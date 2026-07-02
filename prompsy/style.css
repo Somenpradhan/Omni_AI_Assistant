@@ -1,0 +1,474 @@
+/* Import modern geometric fonts */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    --bg-base: #121316;
+    --bg-panel: #1b1c21;
+    --bg-panel-border: #23252a;
+    --text-primary: #f1f3f5;
+    --text-secondary: #8e949f;
+    --accent: #e9ecef;
+    --accent-dark: #ced4da;
+    --inset-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.5), inset -3px -3px 6px rgba(255, 255, 255, 0.02);
+    --clay-shadow: 10px 10px 20px rgba(0, 0, 0, 0.55), -5px -5px 15px rgba(255, 255, 255, 0.02),
+                   inset 3px 3px 6px rgba(255, 255, 255, 0.04), inset -3px -3px 6px rgba(0, 0, 0, 0.4);
+    --button-clay-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4), -3px -3px 9px rgba(255, 255, 255, 0.02),
+                          inset 2px 2px 4px rgba(255, 255, 255, 0.05), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+body {
+    background-color: transparent;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text-primary);
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    padding: 10px; /* Leave padding so outer shadow isn't clipped */
+}
+
+/* Base Clay Container */
+.clay-container {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--bg-panel-border);
+    border-radius: 20px;
+    box-shadow: var(--clay-shadow);
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Panel Switching */
+.panel {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.panel.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Control Header */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    height: 36px;
+}
+
+.app-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-circle {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--text-primary);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5), inset 1px 1px 2px rgba(255,255,255,0.4);
+}
+
+.app-logo h1 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.02rem;
+    color: var(--text-primary);
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Inset Buttons in Header */
+.icon-btn {
+    background: transparent;
+    border: 1px solid var(--bg-panel-border);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--button-clay-shadow);
+    transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+    color: var(--text-primary);
+    transform: scale(1.05);
+}
+
+.icon-btn:active {
+    box-shadow: var(--inset-shadow);
+    transform: scale(0.95);
+}
+
+.close-btn:hover {
+    color: #ff6b6b;
+}
+
+/* App Main Content Layout */
+.app-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+/* Scrollbar styling for clay aesthetics */
+.app-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.app-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.app-content::-webkit-scrollbar-thumb {
+    background: var(--bg-panel-border);
+    border-radius: 10px;
+}
+
+.input-group, .output-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    color: var(--text-secondary);
+    padding-left: 2px;
+}
+
+/* Inset Text Areas (Hollow Clay Look) */
+.textarea-container {
+    border-radius: 12px;
+    border: 1px solid var(--bg-panel-border);
+    background-color: var(--bg-base);
+    padding: 10px 12px;
+    display: flex;
+    position: relative;
+}
+
+.clay-inset {
+    box-shadow: var(--inset-shadow);
+}
+
+textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    resize: none;
+    user-select: text;
+}
+
+#originalPrompt {
+    height: 75px;
+}
+
+#optimizedPrompt {
+    height: 155px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+}
+
+/* Loader Overlay in output area */
+.output-inset {
+    position: relative;
+}
+
+.clay-loader {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 19, 22, 0.9);
+    border-radius: 12px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 10;
+}
+
+.clay-loader.active {
+    display: flex;
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.05);
+    border-top-color: var(--text-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.clay-loader span {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Horizontal Actions / Controls */
+.control-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Clay Select Dropdowns */
+.clay-select {
+    flex: 1;
+    position: relative;
+    border-radius: 10px;
+    border: 1px solid var(--bg-panel-border);
+    background-color: var(--bg-panel);
+    box-shadow: var(--button-clay-shadow);
+}
+
+.clay-select select {
+    width: 100%;
+    padding: 8px 12px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    appearance: none;
+}
+
+.select-wrapper::after {
+    content: "▼";
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Clay Buttons */
+.clay-button {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--bg-panel-border);
+    border-radius: 10px;
+    padding: 8px 16px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: var(--button-clay-shadow);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clay-button:hover {
+    background-color: #212228;
+    transform: translateY(-0.5px);
+}
+
+.clay-button:active {
+    box-shadow: var(--inset-shadow);
+    transform: translateY(1.5px) scale(0.98);
+}
+
+.clay-button.primary {
+    background-color: var(--text-primary);
+    color: var(--bg-base);
+    border-color: #fff;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4), -3px -3px 9px rgba(255, 255, 255, 0.02),
+                inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.clay-button.primary:hover {
+    background-color: #fff;
+}
+
+.clay-button.success {
+    background-color: #23252a;
+    border-color: #3b3d44;
+}
+
+.clay-button.success:hover {
+    background-color: #2b2d34;
+}
+
+/* App Footer Layout */
+.app-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.app-footer .clay-button {
+    flex: 1;
+}
+
+/* Settings Layout Styles */
+.settings-content {
+    gap: 14px;
+}
+
+.settings-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.setting-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.setting-item.full-width {
+    width: 100%;
+}
+
+.setting-item .caption {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    padding-left: 2px;
+}
+
+/* Inset inputs */
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid var(--bg-panel-border);
+    background-color: var(--bg-base);
+    padding: 8px 12px;
+}
+
+.clay-inset-small {
+    box-shadow: var(--inset-shadow);
+}
+
+.input-container input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.82rem;
+    user-select: text;
+}
+
+.show-hide-btn {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.show-hide-btn:hover {
+    color: var(--text-primary);
+}
+
+/* Checkbox Style */
+.checkbox-item {
+    flex-direction: row !important;
+    align-items: center;
+    gap: 8px !important;
+    cursor: pointer;
+    margin-top: 6px;
+}
+
+.checkbox-item label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    text-transform: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.clay-checkbox {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--bg-panel-border);
+    background-color: var(--bg-base);
+    box-shadow: var(--inset-shadow);
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.clay-checkbox:checked {
+    background-color: var(--text-primary);
+}
+
+.clay-checkbox:checked::after {
+    content: "✓";
+    color: var(--bg-base);
+    font-size: 0.65rem;
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#systemPromptInput {
+    font-size: 0.8rem;
+    height: 80px;
+}
+
+/* Keyframes */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

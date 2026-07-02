@@ -1,0 +1,13 @@
+{
+  "name": "prompsy",
+  "version": "1.0.0",
+  "description": "Lightweight desktop utility for instant prompt enhancement",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^30.0.0"
+  }
+}
