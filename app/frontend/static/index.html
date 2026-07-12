@@ -48,15 +48,42 @@
         }
 
         .container {
-            width: 100%;
-            max-width: 1240px;
-            height: 90vh;
-            margin: 5vh auto;
+            width: 92vw;
+            max-width: 2000px;
+            height: 94vh;
+            margin: 3vh auto;
             padding: 24px;
             display: grid;
-            grid-template-columns: 340px 1fr;
+            grid-template-columns: 350px 1fr;
             gap: 24px;
             overflow: hidden;
+        }
+
+        /* High-Resolution Scale Optimization */
+        @media (min-width: 2500px) {
+            .container {
+                zoom: 1.5;
+                width: calc(92vw / 1.5);
+                max-width: calc(2000px / 1.5);
+                height: calc(94vh / 1.5);
+                margin: calc(3vh / 1.5) auto;
+                padding: calc(24px / 1.5);
+                gap: calc(24px / 1.5);
+                grid-template-columns: calc(350px / 1.5) 1fr;
+            }
+        }
+
+        @media (min-width: 1800px) and (max-width: 2499px) {
+            .container {
+                zoom: 1.25;
+                width: calc(92vw / 1.25);
+                max-width: calc(2000px / 1.25);
+                height: calc(94vh / 1.25);
+                margin: calc(3vh / 1.25) auto;
+                padding: calc(24px / 1.25);
+                gap: calc(24px / 1.25);
+                grid-template-columns: calc(350px / 1.25) 1fr;
+            }
         }
 
         /* Sidebar Styling */
@@ -71,6 +98,25 @@
             gap: 28px;
             height: 100%;
             box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            overflow-y: auto;
+        }
+
+        /* Sidebar scrollbar */
+        .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.18);
         }
 
         .brand {
@@ -295,6 +341,235 @@
             background: rgba(248, 113, 113, 0.12);
             border-color: rgba(248, 113, 113, 0.3);
             transform: translateY(-1px);
+        }
+
+        /* New Chat Button */
+        .btn-new-chat {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .btn-new-chat:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(139, 92, 246, 0.35);
+        }
+
+        .btn-new-chat:active {
+            transform: scale(0.98);
+        }
+
+        .btn-new-chat svg {
+            stroke: currentColor;
+        }
+
+        /* Scrollable Session List */
+        .sessions-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .sessions-list-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sessions-list-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+        }
+
+        .sessions-list-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .session-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-card);
+            border-radius: 12px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .session-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .session-item.active {
+            background: rgba(139, 92, 246, 0.08);
+            border-color: var(--accent-purple);
+        }
+
+        .session-title-text {
+            font-size: 0.82rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 190px;
+        }
+
+        .btn-delete-session {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.4;
+            transition: all var(--transition-speed);
+        }
+
+        .session-item:hover .btn-delete-session {
+            opacity: 0.8;
+        }
+
+        .btn-delete-session:hover {
+            color: var(--accent-red);
+            background: rgba(248, 113, 113, 0.1);
+            opacity: 1 !important;
+        }
+
+        /* Knowledge Base Upload Zone */
+        .upload-zone {
+            border: 2px dashed rgba(139, 92, 246, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.01);
+            transition: all var(--transition-speed);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: var(--accent-purple);
+            background: rgba(139, 92, 246, 0.04);
+        }
+
+        .upload-zone svg {
+            color: var(--accent-purple);
+            transition: transform var(--transition-speed);
+        }
+
+        .upload-zone:hover svg {
+            transform: translateY(-2px);
+        }
+
+        .upload-zone-text {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .upload-status {
+            font-size: 0.74rem;
+            color: var(--accent-blue);
+            text-align: center;
+            display: none;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        /* Document List */
+        .docs-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            margin-top: 12px;
+            padding-right: 4px;
+        }
+
+        .docs-list-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .docs-list-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+        }
+
+        .docs-list-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .doc-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-card);
+            border-radius: 10px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all var(--transition-speed);
+        }
+
+        .doc-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .doc-title-text {
+            font-size: 0.78rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 190px;
+            font-weight: 500;
+        }
+
+        .btn-delete-doc {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.4;
+            transition: all var(--transition-speed);
+        }
+
+        .doc-item:hover .btn-delete-doc {
+            opacity: 0.8;
+        }
+
+        .btn-delete-doc:hover {
+            color: var(--accent-red);
+            background: rgba(248, 113, 113, 0.1);
+            opacity: 1 !important;
         }
 
         /* Chat Panel Styling */
@@ -663,9 +938,13 @@
             }
             .sidebar {
                 height: auto;
+                border-radius: 20px;
+                border: 1px solid var(--border-card);
             }
             .chat-panel {
                 height: 600px;
+                border-radius: 20px;
+                border: 1px solid var(--border-card);
             }
         }
     </style>
@@ -705,49 +984,81 @@
                             <span id="server-text">Offline</span>
                         </div>
                     </div>
-                    <!-- Groq check -->
+                    <!-- LLM Core check -->
                     <div class="status-item">
                         <div class="status-info">
-                            <span class="status-name">Groq API</span>
-                            <span class="status-desc" id="groq-model">llama-3.1-8b-instant</span>
+                            <span class="status-name">LLM Core</span>
+                            <span class="status-desc" id="llm-model">Evaluating...</span>
                         </div>
-                        <span class="status-badge" id="groq-badge">Checking...</span>
+                        <span class="status-badge" id="llm-badge">Checking...</span>
                     </div>
-                    <!-- OpenAI check -->
+                    <!-- RAG check -->
                     <div class="status-item">
                         <div class="status-info">
-                            <span class="status-name">OpenAI API</span>
-                            <span class="status-desc" id="openai-model">gpt-4o-mini / embeddings</span>
+                            <span class="status-name">RAG Vector Store</span>
+                            <span class="status-desc" id="rag-model">Evaluating...</span>
                         </div>
-                        <span class="status-badge" id="openai-badge">Checking...</span>
+                        <span class="status-badge" id="rag-badge">Checking...</span>
                     </div>
-                    <!-- Tavily check -->
+                    <!-- Agentic AI check -->
                     <div class="status-item">
                         <div class="status-info">
-                            <span class="status-name">Tavily Web Search</span>
-                            <span class="status-desc" id="tavily-fallback">Falls back to DDG</span>
+                            <span class="status-name">Agentic AI Pipeline</span>
+                            <span class="status-desc" id="agentic-desc">Evaluating...</span>
                         </div>
-                        <span class="status-badge" id="tavily-badge">Checking...</span>
+                        <span class="status-badge" id="agentic-badge">Checking...</span>
                     </div>
                 </div>
             </div>
             
             <!-- Conversation Memory Configuration -->
-            <div>
-                <div class="section-title">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                    Session Memory
-                </div>
-                <div class="settings-block">
-                    <div class="form-group">
-                        <label for="session-id">Session / Thread ID</label>
-                        <input type="text" id="session-id" class="form-input" value="session_01">
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <button class="btn-new-chat" id="btn-new-chat">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    New Chat
+                </button>
+                
+                <div>
+                    <div class="section-title">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        Recent Chats
                     </div>
-                    <button class="btn-clear" id="btn-clear">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        Clear Chat Workspace
-                    </button>
+                    <div class="sessions-list-container" id="sessions-list">
+                        <!-- Loaded dynamically -->
+                    </div>
                 </div>
+
+                <!-- Knowledge Base Vector Management -->
+                <div class="divider"></div>
+                <div>
+                    <div class="section-title">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        Knowledge Base (RAG)
+                    </div>
+                    <div class="upload-zone" id="upload-zone">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <span class="upload-zone-text">Upload PDF / TXT file</span>
+                        <input type="file" id="doc-upload-input" accept=".pdf,.txt" style="display: none;">
+                    </div>
+                    <div class="upload-status" id="upload-status">Ingesting & Embedding...</div>
+                    <div class="docs-list-container" id="docs-list">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+                <input type="hidden" id="session-id" value="session_01">
+                
+                <button class="btn-clear" id="btn-clear" style="margin-top: -6px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    Clear Active Chat
+                </button>
             </div>
         </aside>
 
@@ -811,15 +1122,26 @@ How can I help you today?</div>
         const btnSend = document.getElementById('btn-send');
         const sessionInput = document.getElementById('session-id');
         const btnClear = document.getElementById('btn-clear');
+        const btnNewChat = document.getElementById('btn-new-chat');
+        const sessionsList = document.getElementById('sessions-list');
         const thinkingBubble = document.getElementById('thinking-bubble');
+
+        // Knowledge Base selectors
+        const uploadZone = document.getElementById('upload-zone');
+        const docUploadInput = document.getElementById('doc-upload-input');
+        const uploadStatus = document.getElementById('upload-status');
+        const docsList = document.getElementById('docs-list');
 
         // Status elements
         const serverUrl = document.getElementById('server-url');
         const serverText = document.getElementById('server-text');
         const serverDot = document.getElementById('server-dot');
-        const groqBadge = document.getElementById('groq-badge');
-        const openaiBadge = document.getElementById('openai-badge');
-        const tavilyBadge = document.getElementById('tavily-badge');
+        const llmModel = document.getElementById('llm-model');
+        const llmBadge = document.getElementById('llm-badge');
+        const ragModel = document.getElementById('rag-model');
+        const ragBadge = document.getElementById('rag-badge');
+        const agenticDesc = document.getElementById('agentic-desc');
+        const agenticBadge = document.getElementById('agentic-badge');
 
         const API_BASE = window.location.origin;
 
@@ -835,33 +1157,34 @@ How can I help you today?</div>
                     serverText.textContent = 'Running';
                     serverDot.className = 'pulse-dot pulse-green';
                     
-                    // Groq Badge
-                    if (health.groq_configured) {
-                        groqBadge.textContent = 'Configured';
-                        groqBadge.className = 'status-badge badge-green';
+                    // LLM Core status
+                    llmModel.textContent = health.llm_desc || 'Active';
+                    if (health.llm_online) {
+                        llmBadge.textContent = 'Active';
+                        llmBadge.className = 'status-badge badge-green';
                     } else {
-                        groqBadge.textContent = 'Missing';
-                        groqBadge.className = 'status-badge badge-orange';
+                        llmBadge.textContent = 'Offline';
+                        llmBadge.className = 'status-badge badge-red';
                     }
 
-                    // OpenAI Badge
-                    if (health.openai_configured) {
-                        openaiBadge.textContent = 'Configured';
-                        openaiBadge.className = 'status-badge badge-green';
+                    // RAG Vector Store status
+                    ragModel.textContent = health.rag_desc || 'Ready';
+                    if (health.rag_online) {
+                        ragBadge.textContent = 'Active';
+                        ragBadge.className = 'status-badge badge-green';
                     } else {
-                        openaiBadge.textContent = 'Missing';
-                        openaiBadge.className = 'status-badge badge-orange';
+                        ragBadge.textContent = 'Offline';
+                        ragBadge.className = 'status-badge badge-red';
                     }
 
-                    // Tavily Badge
-                    if (health.tavily_configured) {
-                        tavilyBadge.textContent = 'Configured';
-                        tavilyBadge.className = 'status-badge badge-green';
-                        document.getElementById('tavily-fallback').textContent = 'Search API active';
+                    // Agentic Pipeline status
+                    agenticDesc.textContent = health.agentic_desc || 'Active';
+                    if (health.agentic_online) {
+                        agenticBadge.textContent = 'Active';
+                        agenticBadge.className = 'status-badge badge-green';
                     } else {
-                        tavilyBadge.textContent = 'Missing';
-                        tavilyBadge.className = 'status-badge badge-orange';
-                        document.getElementById('tavily-fallback').textContent = 'Falls back to DDG';
+                        agenticBadge.textContent = 'Error';
+                        agenticBadge.className = 'status-badge badge-red';
                     }
                 } else {
                     setOfflineStatus();
@@ -876,10 +1199,17 @@ How can I help you today?</div>
             serverText.textContent = 'Offline';
             serverDot.className = 'pulse-dot pulse-red';
             
-            [groqBadge, openaiBadge, tavilyBadge].forEach(badge => {
-                badge.textContent = 'Unknown';
-                badge.className = 'status-badge badge-red';
-            });
+            llmModel.textContent = 'Offline';
+            llmBadge.textContent = 'Unknown';
+            llmBadge.className = 'status-badge badge-red';
+            
+            ragModel.textContent = 'Offline';
+            ragBadge.textContent = 'Unknown';
+            ragBadge.className = 'status-badge badge-red';
+            
+            agenticDesc.textContent = 'Offline';
+            agenticBadge.textContent = 'Unknown';
+            agenticBadge.className = 'status-badge badge-red';
         }
 
         // Fetch thread history on launch/change
@@ -1014,6 +1344,206 @@ How can I help you today?</div>
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
+        // Knowledge Base Ingestion & Management
+        async function loadDocuments() {
+            try {
+                const response = await fetch(`${API_BASE}/documents`);
+                if (response.ok) {
+                    const docs = await response.json();
+                    docsList.innerHTML = '';
+                    
+                    if (docs && docs.length > 0) {
+                        docs.forEach(docTitle => {
+                            const item = document.createElement('div');
+                            item.className = 'doc-item';
+                            
+                            const titleSpan = document.createElement('span');
+                            titleSpan.className = 'doc-title-text';
+                            titleSpan.textContent = docTitle;
+                            titleSpan.title = docTitle;
+                            item.appendChild(titleSpan);
+                            
+                            const deleteBtn = document.createElement('button');
+                            deleteBtn.className = 'btn-delete-doc';
+                            deleteBtn.innerHTML = `
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            `;
+                            deleteBtn.title = 'Delete Document Chunks';
+                            
+                            deleteBtn.addEventListener('click', async () => {
+                                if (confirm(`Are you sure you want to remove "${docTitle}" from the Knowledge Base? This clears its indexed chunks.`)) {
+                                    await deleteDocument(docTitle);
+                                }
+                            });
+                            
+                            item.appendChild(deleteBtn);
+                            docsList.appendChild(item);
+                        });
+                    } else {
+                        docsList.innerHTML = '<div style="font-size:0.75rem;color:var(--text-muted);text-align:center;padding:8px 0;">No documents indexed</div>';
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to load documents list:", err);
+            }
+        }
+
+        async function uploadFile(file) {
+            if (!file) return;
+            
+            // Show status
+            uploadStatus.style.display = 'block';
+            uploadStatus.textContent = 'Uploading & Ingesting...';
+            uploadStatus.style.color = 'var(--accent-blue)';
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            try {
+                const response = await fetch(`${API_BASE}/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    uploadStatus.textContent = `Success! Added ${data.chunks_added} chunks.`;
+                    uploadStatus.style.color = 'var(--accent-green)';
+                    setTimeout(() => {
+                        uploadStatus.style.display = 'none';
+                    }, 4000);
+                    
+                    // Reload document list
+                    loadDocuments();
+                    // Reload system health to update chunk stats
+                    pollHealth();
+                } else {
+                    const errData = await response.json();
+                    uploadStatus.textContent = `Error: ${errData.detail || 'Upload failed'}`;
+                    uploadStatus.style.color = 'var(--accent-red)';
+                }
+            } catch (err) {
+                console.error("File upload error:", err);
+                uploadStatus.textContent = 'Upload failed: Server connection issue';
+                uploadStatus.style.color = 'var(--accent-red)';
+            }
+        }
+
+        async function deleteDocument(docTitle) {
+            try {
+                const response = await fetch(`${API_BASE}/document/${encodeURIComponent(docTitle)}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    loadDocuments();
+                    pollHealth();
+                } else {
+                    alert("Failed to delete the document.");
+                }
+            } catch (err) {
+                console.error("Failed to delete document:", err);
+            }
+        }
+
+        async function loadSessions() {
+            try {
+                const response = await fetch(`${API_BASE}/sessions`);
+                if (response.ok) {
+                    const sessions = await response.json();
+                    sessionsList.innerHTML = '';
+                    
+                    if (sessions && sessions.length > 0) {
+                        const activeId = sessionInput.value;
+                        sessions.forEach(session => {
+                            const item = document.createElement('div');
+                            item.className = `session-item${session.id === activeId ? ' active' : ''}`;
+                            item.dataset.id = session.id;
+                            
+                            const titleSpan = document.createElement('span');
+                            titleSpan.className = 'session-title-text';
+                            titleSpan.textContent = session.title || 'New Session';
+                            titleSpan.title = session.title || 'New Session';
+                            item.appendChild(titleSpan);
+                            
+                            const deleteBtn = document.createElement('button');
+                            deleteBtn.className = 'btn-delete-session';
+                            deleteBtn.innerHTML = `
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            `;
+                            deleteBtn.title = 'Delete Chat Thread';
+                            
+                            // Prevent event bubbling when deleting
+                            deleteBtn.addEventListener('click', async (e) => {
+                                e.stopPropagation();
+                                if (confirm(`Are you sure you want to delete the chat thread "${session.title}"?`)) {
+                                    await deleteSession(session.id);
+                                }
+                            });
+                            
+                            item.appendChild(deleteBtn);
+                            
+                            item.addEventListener('click', () => {
+                                selectSession(session.id);
+                            });
+                            
+                            sessionsList.appendChild(item);
+                        });
+                    } else {
+                        sessionsList.innerHTML = '<div style="font-size:0.8rem;color:var(--text-muted);text-align:center;padding:10px 0;">No saved conversations</div>';
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to load sessions list:", err);
+            }
+        }
+
+        function selectSession(sessionId) {
+            sessionInput.value = sessionId;
+            // Update active state in UI
+            Array.from(sessionsList.getElementsByClassName('session-item')).forEach(item => {
+                if (item.dataset.id === sessionId) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            loadThreadHistory();
+        }
+
+        async function createNewSession() {
+            // Generate a unique session ID
+            const newId = 'session_' + Date.now();
+            sessionInput.value = newId;
+            
+            // Clear current chat UI (leaving welcoming messages)
+            clearChatUI();
+            
+            // Update sidebar highlights
+            loadSessions();
+        }
+
+        async function deleteSession(sessionId) {
+            try {
+                const response = await fetch(`${API_BASE}/session/${sessionId}`, { method: 'DELETE' });
+                if (response.ok) {
+                    if (sessionInput.value === sessionId) {
+                        // If we deleted the active session, start a new one
+                        createNewSession();
+                    } else {
+                        loadSessions();
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to delete session:", err);
+            }
+        }
+
         async function sendMessage() {
             const query = chatInput.value.trim();
             const threadId = sessionInput.value.trim() || 'default_session';
@@ -1051,6 +1581,9 @@ How can I help you today?</div>
                     };
                     
                     appendMessageUI('assistant', data.final_response, data.route, metadata);
+                    
+                    // Refresh session list dynamically
+                    loadSessions();
                 } else {
                     appendMessageUI('assistant', "System error: Failed to retrieve response from orchestrator.", "ERROR");
                 }
@@ -1073,28 +1606,59 @@ How can I help you today?</div>
             if (e.key === 'Enter') sendMessage();
         });
 
-        sessionInput.addEventListener('blur', () => {
-            loadThreadHistory();
-        });
+        btnNewChat.addEventListener('click', createNewSession);
 
         btnClear.addEventListener('click', async () => {
-            if (confirm("Are you sure you want to clear this chat history workspace? This wipes localized database history for this session ID.")) {
+            if (confirm("Are you sure you want to clear this active chat workspace? This wipes localized database history for this session ID.")) {
                 const threadId = sessionInput.value.trim();
                 if (threadId) {
-                    try {
-                        await fetch(`${API_BASE}/session/${threadId}`, { method: 'DELETE' });
-                    } catch (err) {
-                        console.error("Failed to delete session on server:", err);
-                    }
+                    await deleteSession(threadId);
                 }
-                clearChatUI();
-                loadThreadHistory();
             }
         });
+
+        // Knowledge Base Ingestion Drag/Drop and Click Trigger Events
+        uploadZone.addEventListener('click', () => {
+            docUploadInput.click();
+        });
+
+        docUploadInput.addEventListener('change', () => {
+            if (docUploadInput.files.length > 0) {
+                uploadFile(docUploadInput.files[0]);
+                docUploadInput.value = ''; // Reset input to allow same file re-upload
+            }
+        });
+
+        // Drag & drop handlers
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadZone.classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadZone.classList.remove('dragover');
+            }, false);
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files.length > 0) {
+                uploadFile(files[0]);
+            }
+        }, false);
 
         // Initialize polling and setup
         pollHealth();
         setInterval(pollHealth, 10000);
+        loadSessions();
+        loadDocuments();
         loadThreadHistory();
     </script>
 </body>
