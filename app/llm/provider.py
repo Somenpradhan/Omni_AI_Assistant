@@ -3,16 +3,7 @@ import json
 from openai import OpenAI
 from app.config.settings import settings
 
-_openai_client = None
 _groq_client = None
-
-def get_openai_client():
-    global _openai_client
-    if _openai_client is None:
-        api_key = settings.OPENAI_API_KEY
-        if api_key and api_key != "your_openai_api_key_here" and api_key.strip():
-            _openai_client = OpenAI(api_key=api_key)
-    return _openai_client
 
 def get_groq_client():
     global _groq_client
@@ -27,7 +18,7 @@ def get_groq_client():
 
 def get_chat_completion(messages: list, temperature: float = 0.0, max_tokens: int = None, json_mode: bool = False) -> str:
     """
-    Unified chat completions endpoint wrapper. Prioritizes Groq if configured, falls back to OpenAI.
+    Unified chat completions endpoint wrapper. Prioritizes Groq if configured.
     Provides simulation logs if no keys are found.
     """
     # 1. Attempt Groq
@@ -48,31 +39,12 @@ def get_chat_completion(messages: list, temperature: float = 0.0, max_tokens: in
             response = groq_client.chat.completions.create(**kwargs)
             return response.choices[0].message.content
         except Exception as e:
-            print(f"[Warning] Groq API call failed: {e}. Trying OpenAI fallback.")
+            print(f"[Warning] Groq API call failed: {e}.")
 
-    # 2. Attempt OpenAI
-    openai_client = get_openai_client()
-    if openai_client:
-        try:
-            model = settings.DEFAULT_OPENAI_MODEL
-            kwargs = {
-                "model": model,
-                "messages": messages,
-                "temperature": temperature,
-            }
-            if max_tokens:
-                kwargs["max_tokens"] = max_tokens
-            if json_mode:
-                kwargs["response_format"] = {"type": "json_object"}
-                
-            response = openai_client.chat.completions.create(**kwargs)
-            return response.choices[0].message.content
-        except Exception as e:
-            print(f"[Warning] OpenAI API call failed: {e}.")
-
-    # 3. Simulation Fallback
+    # 2. Simulation Fallback
     print("[INFO] Running in completion simulation mode (no working API keys discovered).")
     return simulate_completion(messages, json_mode)
+
 
 def simulate_completion(messages: list, json_mode: bool = False) -> str:
     """

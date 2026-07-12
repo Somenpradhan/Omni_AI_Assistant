@@ -8,18 +8,13 @@ def health_check():
     """
     Evaluates configurations and returns service availability status.
     """
-    openai_configured = bool(settings.OPENAI_API_KEY and settings.OPENAI_API_KEY != "your_openai_api_key_here")
     tavily_configured = bool(settings.TAVILY_API_KEY and settings.TAVILY_API_KEY != "your_tavily_api_key_here" and settings.TAVILY_API_KEY.strip())
     groq_configured = bool(settings.GROQ_API_KEY and settings.GROQ_API_KEY != "your_groq_api_key_here" and settings.GROQ_API_KEY.strip())
     
     # Evaluate LLM core status
-    llm_online = groq_configured or openai_configured
-    if groq_configured and openai_configured:
-        llm_desc = "Groq (Llama) & OpenAI"
-    elif groq_configured:
+    llm_online = groq_configured
+    if groq_configured:
         llm_desc = "Groq (Llama 3.1) Active"
-    elif openai_configured:
-        llm_desc = "OpenAI (GPT-4o) Active"
     else:
         llm_desc = "Simulation Mode Active"
         
@@ -44,7 +39,7 @@ def health_check():
         
     return {
         "status": "online",
-        "openai_configured": openai_configured,
+        "openai_configured": False,
         "tavily_configured": tavily_configured,
         "groq_configured": groq_configured,
         "llm_online": llm_online,
